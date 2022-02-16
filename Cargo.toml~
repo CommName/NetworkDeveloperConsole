@@ -7,7 +7,7 @@ edition = "2021"
 
 [dependencies]
 pnet = "0.28.0"
+pnet_datalink = "0.28.0"
+pnet_packet = "0.28.0"
 ipnetwork = "0.18.0"
-serde = { version = "1", features = ["derive"] }
-tui = "0.17.0"
-crossterm = "0.22.1"
+
