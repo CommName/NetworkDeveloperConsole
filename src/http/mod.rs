@@ -1,7 +1,9 @@
 pub mod request_line;
+pub mod httprequest;
+pub mod httpresponse;
+use httparse::{Request, Response, Status, Error};
 
-
-pub enum Htpp {
+pub enum Http {
     HttpRequest,
     HttpResponse,
 }
@@ -12,23 +14,22 @@ pub struct HttpVersion {
     pub minor: u8
 }
 
-pub trait Http {
-    fn get_header();
-    fn get_body();
-}
+pub fn parse_bytes(bytes: &[u8]) -> Result<Status<Http>, Error> {
+    
+    let mut headers = [httparse::EMPTY_HEADER; 16];
+    let mut req = httparse::Request::new(&mut headers);
 
-pub fn from_raw(bytes: &[u8]) {
-    let parser = request_line::RequestLineParser::new(bytes);
+    // TODO if error parse Response
+    let result = req.parse(bytes)?;
 
-    let method = parser.parse();
-
-    match method {
-	Ok(request) => {
-	    println!("{:?}", request);
-	},
-	Err(e) => {
-	    
-	}
+    match result {
+        Status::Complete(req) => {
+            // TODO parse request
+            Ok(Status::Complete(Http::HttpRequest))
+        },
+        Status::Partial => {
+            Ok(Status::Partial)
+        }
     }
 }
 

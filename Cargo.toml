@@ -11,3 +11,4 @@ ipnetwork = "0.18.0"
 serde = { version = "1", features = ["derive"] }
 tui = "0.17.0"
 crossterm = "0.22.1"
+httparse = "1.6.0"

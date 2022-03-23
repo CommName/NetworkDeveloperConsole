@@ -1,4 +1,6 @@
 use std::collections::HashMap;
+use super::request_line::Method;
+use super::HttpVersion;
 
 pub struct HttpRequest {
     pub request_line: HttpRequestLine,
@@ -22,9 +24,8 @@ pub struct HttpRequestParser {
 impl HttpRequestParser {
 
     pub fn new() -> Self {
-	Self {
-
-	}
+	    Self {
+	    }
     }
 }
 
