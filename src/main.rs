@@ -3,12 +3,12 @@ use std::sync::{
     Arc,
     mpsc::{ Sender, Receiver, channel}
 };
-use std::time::Duration;
 
 mod network;
 mod http;
-mod gui;
+mod ui;
 mod store;
+mod app;
 
 use store::Store;
 
@@ -28,17 +28,20 @@ fn init_store(rx: Receiver<network::network_structures::Layer3Packet>) -> Arc<St
     let recive_store = store.clone();
     thread::spawn(move || {
 	    while let Ok(message) = rx.recv() {
-            recive_store.register_packet(message);
+            // recive_store.register_packet(message);
 	    }
     });
 
     store
 }
 
-fn main() {
+fn main() -> std::io::Result<()> {
     let (sx, rx) = channel();
 
-    subscribe_to_interfaces(sx);
+    // subscribe_to_interfaces(sx);
+    let mut app = app::App::new();
     let store = init_store(rx);
-    gui::set_up_gui(store);
+    ui::start_ui(&mut app);
+
+    Ok(())
 }
